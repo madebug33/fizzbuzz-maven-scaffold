@@ -1,14 +1,34 @@
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
-import static org.fest.assertions.api.Assertions.assertThat;
+import java.util.Arrays;
+import java.util.Collection;
 
+import static junit.framework.Assert.assertEquals;
+
+@RunWith(Parameterized.class)
 public class FizzBuzzTest {
-    @Test
-    public void should_return_Fizz_given_number_divisible_by_3(){
-        int number =3;
-        String result = FizzBuzz.of(number);
-        assertThat(result).isEqualTo("Fizz");
+    private int number;
+    private String expectedResult;
+
+    public FizzBuzzTest(int number, String expectedResult) {
+        this.number = number;
+        this.expectedResult = expectedResult;
     }
 
+    @Parameterized.Parameters
+    public static Collection<Object[]> data() {
+        return Arrays.asList(new Object[][]{
+                {1, "1"},
+                {3, "Fizz"},
+                {5, "Buzz"},
+                {15, "FizzBuzz"}
+        });
+    }
 
+    @Test
+    public void test() {
+        assertEquals(expectedResult, FizzBuzz.of(number));
+    }
 }
